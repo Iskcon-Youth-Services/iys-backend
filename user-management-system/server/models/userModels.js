@@ -63,9 +63,9 @@ const submitSadhanaForm = async (req) => {
         throw error;
     }
 };
-const getSadhanaReport = async (username) => {
-    let query = "SELECT * FROM sadhanaformscore where username = $1;";
-    return await promise_connection(query,username);
+const getSadhanaReport = async (input) => {
+    let query = "SELECT * FROM sadhanaformscore where username = $1  AND date BETWEEN $2 AND $3;";
+    return await promise_connection(query,input);
 };
 
 module.exports = { getUsers, signupUsers, loginUser,submitSadhanaForm ,getSadhanaReport};

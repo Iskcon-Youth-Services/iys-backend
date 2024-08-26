@@ -16,6 +16,6 @@ router.route('/welcome').get(userController.welcome);
 
 router.route('/submitSadhanaForm').post(userController.submitSadhanaForm);
 
-router.route('/getSadhanaReport').get(userController.getSadhanaReport);
+router.route('/getSadhanaReport').post(userController.getSadhanaReport);
 
 module.exports = router;

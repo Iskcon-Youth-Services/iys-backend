@@ -68,7 +68,7 @@ const getSadhanaReport = async (req, res) => {
     let data = [];
     try {
         let username=req.session.username;
-        data = await userModels.getSadhanaReport([username]);
+        data = await userModels.getSadhanaReport([username,req.body.startDate,req.body.endDate]);
         res.send({report:data});
         console.log({report: data});
     } catch (err) {
