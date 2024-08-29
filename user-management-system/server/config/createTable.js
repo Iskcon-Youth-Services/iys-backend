@@ -15,7 +15,7 @@ const createTables = async () => {
 
         // Create 'SadhanaFormScore' table
         const createSadhanaFormScoreTableQuery = `
-            CREATE TABLE IF NOT EXISTS SadhanaFormScore (
+            CREATE TABLE IF NOT EXISTS SadhanaScore (
                 id SERIAL PRIMARY KEY,
                 date DATE NOT NULL,
                 username VARCHAR(100) REFERENCES users(username) ON DELETE CASCADE,
@@ -23,9 +23,9 @@ const createTables = async () => {
                 nidrawakeupscore INT,
                 nidradaysleepscore INT,
                 japascore INT,
-                pathan INT,
-                sravan INT,
-                total INT,
+                pathanscore FLOAT,
+                sravanscore FLOAT,
+                totalscore FLOAT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `;
