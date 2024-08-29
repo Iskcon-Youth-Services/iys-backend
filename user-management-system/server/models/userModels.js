@@ -50,9 +50,9 @@ const loginUser = async (username, password) => {
     }
 };
 const submitSadhanaForm = async (req) => {
-    const query = "INSERT INTO SadhanaFormScore (date,username,nidratobedscore,nidrawakeupscore,nidradaysleepscore,japascore,pathan,sravan) VALUES ($1, $2, $3,$4,$5,$6,$7,$8) RETURNING *;";
+    const query = "INSERT INTO SadhanaFormScore (date,username,nidratobedscore,nidrawakeupscore,nidradaysleepscore,japascore,pathan,sravan,total) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9) RETURNING *;";
    
-    const values = [new Date(),req.username,req.nidraToBedScore, req.nidraWakeUpScore,req.nidraDaySleepScore,req.japaScore,req.pathan,req.sravan];
+    const values = [new Date(),req.username,req.nidraToBedScore, req.nidraWakeUpScore,req.nidraDaySleepScore,req.japaScore,req.pathan,req.sravan,req.total];
     console.log(values);
 
     try {

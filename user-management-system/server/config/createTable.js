@@ -23,8 +23,9 @@ const createTables = async () => {
                 nidrawakeupscore INT,
                 nidradaysleepscore INT,
                 japascore INT,
-                pathan TEXT,
-                sravan TEXT,
+                pathan INT,
+                sravan INT,
+                total INT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `;
