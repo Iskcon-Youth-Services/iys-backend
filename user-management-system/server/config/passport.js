@@ -9,27 +9,33 @@ passport.use(new GoogleStrategy({
     callbackURL: '/auth/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
     try {
+        // Upsert user based on Google profile information
         let user = await findUserByGoogleId(profile.id);
         if (!user) {
-            // Signup the user if they don't exist
             user = await upsertUser(profile.id, profile.displayName, profile.emails[0].value, profile.photos[0].value);
         }
-        // If the user exists, they are logged in
+        console.log(user);
+        // Pass the user object to serializeUser
         done(null, user);
     } catch (err) {
         done(err, false);
     }
 }));
 
+// Store the user ID in the session
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user.googleid);  // Ensure googleId is correctly set in the user object
 });
 
-passport.deserializeUser(async (id, done) => {
+// Retrieve the user based on the ID stored in the session
+passport.deserializeUser(async (googleId, done) => {
     try {
-        const user = await findUserByGoogleId(id);
+        const user = await findUserByGoogleId(googleId);
+        if (!user) {
+            return done(new Error('User not found'));
+        }
         done(null, user);
     } catch (err) {
-        done(err, false);
+        done(err, null);
     }
 });

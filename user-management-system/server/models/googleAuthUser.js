@@ -1,6 +1,6 @@
-const client = require('../config/db');
+const pool = require('../config/db');
 
-// Create a table for Google User Details (if not exists)
+// Create table if not exists
 const createTableQuery = `
     CREATE TABLE IF NOT EXISTS googleUserDetails (
         id SERIAL PRIMARY KEY,
@@ -11,11 +11,10 @@ const createTableQuery = `
     );
 `;
 
-client.query(createTableQuery)
-    .then(res => console.log('Google User Table is ready'))
+pool.query(createTableQuery)
+    .then(() => console.log('Google User Table is ready'))
     .catch(err => console.error('Error creating table', err));
 
-// Insert or Update User (for signup or login)
 const upsertUser = async (googleId, displayName, email, photo) => {
     const query = `
         INSERT INTO googleUserDetails (googleId, displayName, email, photo)
@@ -29,22 +28,21 @@ const upsertUser = async (googleId, displayName, email, photo) => {
     const values = [googleId, displayName, email, photo];
 
     try {
-        const result = await client.query(query, values);
-        return result.rows[0];
+        const result = await pool.query(query, values);
+        return result.rows[0];  // Return the full user object
     } catch (err) {
         console.error('Error inserting/updating user', err);
         throw err;
     }
 };
 
-// Find User by Google ID
 const findUserByGoogleId = async (googleId) => {
     const query = `SELECT * FROM googleUserDetails WHERE googleId = $1;`;
     const values = [googleId];
 
     try {
-        const result = await client.query(query, values);
-        return result.rows[0];
+        const result = await pool.query(query, values);
+        return result.rows[0];  // Return the full user object
     } catch (err) {
         console.error('Error finding user', err);
         throw err;

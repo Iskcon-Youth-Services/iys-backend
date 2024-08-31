@@ -1,29 +1,11 @@
 const passport = require('passport');
-const User = require('../models/googleAuthUser');
 
-// Google OAuth callback
 exports.googleCallback = passport.authenticate('google', {
     failureRedirect: '/auth/login',
     successRedirect: '/dashboard',
     session: true
 });
 
-// Serialize user into session
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-});
-
-// Deserialize user from session
-passport.deserializeUser(async (id, done) => {
-    try {
-        const user = await User.findByPk(id);
-        done(null, user);
-    } catch (err) {
-        done(err, false);
-    }
-});
-
-// Handle logout with error handling
 exports.logout = (req, res, next) => {
     req.logout((err) => {
         if (err) return next(err);

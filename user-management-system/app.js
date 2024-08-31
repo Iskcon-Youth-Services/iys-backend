@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const mysql = require('mysql')
 const Client = require('./server/config/db')
 const userRoutes = require('./server/routes/userRoutes')
+const authenticationRoutes = require('./server/routes/authenticationRoutes')
 const {client} = require('pg')
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -52,6 +53,6 @@ app.use(passport.session());
 // app.use(require('./routes/userRoutes'));
 app.use(express.json());
 app.use('/api', userRoutes);
-
+app.use(authenticationRoutes);
 
 app.listen (PORT, () => console.log(`Listening to port: ${PORT}`));
