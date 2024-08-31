@@ -10,7 +10,8 @@ const { promisify } = require('util')
 const { application } = require('express')
 const {createTables} = require('./server/config/createTable');
 const pgSession = require('connect-pg-simple')(session);
-
+const passport = require('passport');
+const passport1 = require('./server/config/passport');
 require('dotenv').config()
 
 const app = express()
@@ -25,7 +26,9 @@ app.use(bodyParser.json());
 // Call createTables to ensure tables are created
 createTables();
 
+
 // Set up session middleware
+
 app.use(session({
     store: new pgSession({
         pool: Client,                // Connection pool
@@ -40,6 +43,13 @@ app.use(session({
         httpOnly: true,            // Prevents client-side JavaScript from accessing the cookie
     }
 }));
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Routes
+// app.use(require('./routes/userRoutes'));
 app.use(express.json());
 app.use('/api', userRoutes);
 
