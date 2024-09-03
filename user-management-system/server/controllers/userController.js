@@ -1,7 +1,10 @@
 const userModels = require('../models/userModels')
+const userServices = require('../services/userServices')
 const welcome = (req, res) => {
     if(req.session.username)
     res.send(`Welcome to the User Management System! ${req.session.username}`);
+    else if(req.session.passport)
+    res.send(`Welcome to the User Management System! ${req.session.passport?.user}`);
     else
     res.send("Unauthorised not login yet");
 };
@@ -50,62 +53,7 @@ const logout = async (req,res)=> {
         });
     
 }
-function calculatePathanScore(spBooksMinutes, otherBooksMinutes, slokaMinutes) {
-    let score = 0;
-    spBooksMinutes=spBooksMinutes*7;
-    otherBooksMinutes=otherBooksMinutes*7;
-    slokaMinutes=slokaMinutes*7;
 
-    
-    if (spBooksMinutes >= 840) {
-        score += 50;
-    } else {
-        score += Math.max(0, 50 - Math.floor((840 - spBooksMinutes) / 6));
-    }
-
-    if (otherBooksMinutes >= 240) {
-        score += 40;
-    } else {
-        score += Math.max(0, 40 - Math.floor((240 - otherBooksMinutes) / 6));
-    }
-
-   
-    if (slokaMinutes >= 60) {
-        score += 10;
-    } else {
-        score += Math.max(0, 10 - Math.floor((60 - slokaMinutes) / 6));
-    }
-
-    return score/7;
-}
-
-function calculateSravanScore(guruMinutes, spMinutes, otherMinutes) {
-    let score = 0;
-    guruMinutes=guruMinutes*7;
-    spMinutes=spMinutes*7;
-    otherMinutes=otherMinutes*7;
-    
-    if (guruMinutes >= 100) {
-        score += 40;
-    } else {
-        score += Math.max(0, 40 - Math.floor((100 - guruMinutes) / 5) * 2);
-    }
-
-   
-    if (spMinutes >= 100) {
-        score += 40;
-    } else {
-        score += Math.max(0, 40 - Math.floor((100 - spMinutes) / 5) * 2);
-    }
-
-    if (otherMinutes >= 50) {
-        score += 20;
-    } else {
-        score += Math.max(0, 20 - Math.floor((50 - otherMinutes) / 5) * 2);
-    }
-
-    return score/7;
-}
 
 const submitSadhanaForm = async(req,res) => {
     const {nidraToBed, nidraWakeUp, nidraDaySleep, japa, pathanMin,sravanMin} = req.body;
@@ -115,8 +63,8 @@ const submitSadhanaForm = async(req,res) => {
     let nidraDaySleepScore=scoreMap[nidraDaySleep];
     let japaScore=scoreMap[japa];
     let username=req.session.username;
-    let pathanScore=calculatePathanScore(parseInt(pathanMin[0]),parseInt(pathanMin[1]),parseInt(pathanMin[2]));
-    let sravanScore=calculateSravanScore(parseInt(sravanMin[0]),parseInt(sravanMin[1]),parseInt(sravanMin[2]));
+    let pathanScore=userServices.calculatePathanScore(parseInt(pathanMin[0]),parseInt(pathanMin[1]),parseInt(pathanMin[2]));
+    let sravanScore=userServices.calculateSravanScore(parseInt(sravanMin[0]),parseInt(sravanMin[1]),parseInt(sravanMin[2]));
     let total=nidraToBedScore+nidraWakeUpScore+nidraDaySleepScore+japaScore+pathanScore+sravanScore;
     let score={username,nidraToBedScore,nidraWakeUpScore,nidraDaySleepScore,japaScore,pathanScore,sravanScore,total};
     
@@ -135,6 +83,70 @@ const getSadhanaReport = async (req, res) => {
         res.json({msg: err, data: []});
     }
 };
+
+const submitUserDetails = async (req, res) => {
+    try {
+        // Extract details from the form submission
+         const {
+            first_name,last_name, email, mobile, date_of_birth,
+            address_line1, address_line2, city, state, postal_code,
+            country, gender, profile_picture_url, bio
+        } = req.body;
+
+        // Generate the user_id (e.g., using googleId from session or email+name)
+        const googleId = req.session.passport?.user; // Assuming googleId is stored in session
+        const user_id = googleId ? googleId : `${req.session.username}`;
+
+        // Create a userData object to pass to the model
+        const userData = {
+            user_id,first_name,last_name, email, mobile, date_of_birth,
+            address_line1, address_line2, city, state, postal_code,
+            country, gender, profile_picture_url, bio
+        };
+
+        // Insert the user into the database
+        const newUser = await userModels.submitUserDetails(userData);
+        console.log('User inserted:', newUser);
+
+        res.send('User details submitted successfully!');
+    } catch (err) {
+        console.error('Error inserting user:', err);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+
+
+const updateUserDetails = async (req, res) => {
+    try {
+        // Extract details from the form submission
+        const {
+            first_name,last_name, email, mobile, date_of_birth,
+            address_line1, address_line2, city, state, postal_code,
+            country, gender, profile_picture_url, bio
+        } = req.body;
+
+        // Generate the user_id (e.g., using googleId from session or email+name)
+        const googleId = req.session.passport?.user; // Assuming googleId is stored in session
+        const user_id = googleId ? googleId : `${req.session.username}`;
+
+        // Create a userData object to pass to the model
+        const userData = {
+            user_id, first_name,last_name, email, mobile, date_of_birth,
+            address_line1, address_line2, city, state, postal_code,
+            country, gender, profile_picture_url, bio
+        };
+
+        // Insert the user into the database
+        const newUser = await userModels.updateUserDetails(userData);
+        console.log('User profile updated:', newUser);
+
+        res.send('User details submitted successfully!');
+    } catch (err) {
+        console.error('Error inserting user:', err);
+        res.status(500).send('Internal Server Error');
+    }
+};
 // Export the function
-module.exports = { welcome,users , signup,login,submitSadhanaForm,logout , getSadhanaReport };
+module.exports = { welcome,users , signup,login,submitSadhanaForm,logout , getSadhanaReport, submitUserDetails, updateUserDetails };
 

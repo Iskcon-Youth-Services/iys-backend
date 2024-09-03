@@ -24,7 +24,7 @@ passport.use(new GoogleStrategy({
 
 // Store the user ID in the session
 passport.serializeUser((user, done) => {
-    done(null, user.googleid);  // Ensure googleId is correctly set in the user object
+    done(null, user.googleid);  
 });
 
 // Retrieve the user based on the ID stored in the session
