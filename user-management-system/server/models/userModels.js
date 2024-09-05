@@ -50,9 +50,9 @@ const loginUser = async (username, password) => {
     }
 };
 const submitSadhanaForm = async (req) => {
-    const query = "INSERT INTO SadhanaScore (date,username,nidratobedscore,nidrawakeupscore,nidradaysleepscore,japascore,pathanscore,sravanscore,totalscore) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9) RETURNING *;";
+    const query = "INSERT INTO SadhanaScore (date,user_id,nidratobedscore,nidrawakeupscore,nidradaysleepscore,japascore,pathanscore,sravanscore,totalscore) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9) RETURNING *;";
    
-    const values = [new Date(),req.username,req.nidraToBedScore, req.nidraWakeUpScore,req.nidraDaySleepScore,req.japaScore,req.pathanScore,req.sravanScore,req.total];
+    const values = [new Date(), req.user_id,req.nidraToBedScore, req.nidraWakeUpScore,req.nidraDaySleepScore,req.japaScore,req.pathanScore,req.sravanScore,req.total];
     console.log(values);
 
     try {
@@ -64,7 +64,7 @@ const submitSadhanaForm = async (req) => {
     }
 };
 const getSadhanaReport = async (input) => {
-    let query = "SELECT * FROM sadhanascore where username = $1  AND date BETWEEN $2 AND $3;";
+    let query = "SELECT * FROM sadhanascore where user_id = $1  AND date BETWEEN $2 AND $3;";
     return await promise_connection(query,input);
 };
 

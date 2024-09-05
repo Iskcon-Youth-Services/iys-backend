@@ -4,8 +4,9 @@
   "description": "my test project",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "migrate": "flyway -c ./server/config/flyway.js migrate",
+    "clean": "flyway -c ./server/config/flyway.js clean",
+    "info": "flyway -c ./server/config/flyway.js info"
   },
   "author": "manish kumar",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "sequelize": "^6.37.3"
   },
   "devDependencies": {
+    "node-flywaydb": "^3.0.7",
     "nodemon": "^3.1.0"
   }
 }

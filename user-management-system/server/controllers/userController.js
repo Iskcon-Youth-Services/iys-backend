@@ -1,15 +1,19 @@
 const userModels = require('../models/userModels')
 const userServices = require('../services/userServices')
+
 const welcome = (req, res) => {
+    // console.log(req.session);
+    // req.session.passport=req.session.passport;
     if(req.session.username)
     res.send(`Welcome to the User Management System! ${req.session.username}`);
     else if(req.session.passport)
-    res.send(`Welcome to the User Management System! ${req.session.passport?.user}`);
+    res.send(`Welcome to the User Management System! ${req.session.passport.user}`);
     else
     res.send("Unauthorised not login yet");
 };
-const users = getUsers = async (req, res) => {
+const users = async (req, res) => {
     let data = [];
+    // console.log(req.session);
     try {
         data = await userModels.getUsers();
         res.send({users:data});
@@ -55,18 +59,26 @@ const logout = async (req,res)=> {
 }
 
 
-const submitSadhanaForm = async(req,res) => {
+const submitSadhanaForm = async (req,res) => {
     const {nidraToBed, nidraWakeUp, nidraDaySleep, japa, pathanMin,sravanMin} = req.body;
+  
     var scoreMap=[25,20,15,10,5,0,-5];
     let nidraToBedScore=scoreMap[nidraToBed];
     let nidraWakeUpScore=scoreMap[nidraWakeUp];
     let nidraDaySleepScore=scoreMap[nidraDaySleep];
     let japaScore=scoreMap[japa];
-    let username=req.session.username;
+    
     let pathanScore=userServices.calculatePathanScore(parseInt(pathanMin[0]),parseInt(pathanMin[1]),parseInt(pathanMin[2]));
     let sravanScore=userServices.calculateSravanScore(parseInt(sravanMin[0]),parseInt(sravanMin[1]),parseInt(sravanMin[2]));
     let total=nidraToBedScore+nidraWakeUpScore+nidraDaySleepScore+japaScore+pathanScore+sravanScore;
-    let score={username,nidraToBedScore,nidraWakeUpScore,nidraDaySleepScore,japaScore,pathanScore,sravanScore,total};
+    let user_id=await userServices.getUserId(req);
+    let score={user_id,nidraToBedScore,nidraWakeUpScore,nidraDaySleepScore,japaScore,pathanScore,sravanScore,total};
+
+   
+
+  
+   
+    
     
     await userModels.submitSadhanaForm(score);
     res.status(201).json({ message: 'Sadhana form submitted successfully' });
@@ -75,8 +87,10 @@ const submitSadhanaForm = async(req,res) => {
 const getSadhanaReport = async (req, res) => {
     let data = [];
     try {
-        let username=req.session.username;
-        data = await userModels.getSadhanaReport([username,req.body.startDate,req.body.endDate]);
+       
+        let user_id=userServices.getUserId(req);
+        
+        data =  await userModels.getSadhanaReport([user_id,req.body.startDate,req.body.endDate]);
         res.send({report:data});
         console.log({report: data});
     } catch (err) {
@@ -86,20 +100,22 @@ const getSadhanaReport = async (req, res) => {
 
 const submitUserDetails = async (req, res) => {
     try {
+        console.log('Session Data:', req.session);
         // Extract details from the form submission
-         const {
-            first_name,last_name, email, mobile, date_of_birth,
+        const {
+            first_name, last_name, email, mobile, date_of_birth,
             address_line1, address_line2, city, state, postal_code,
             country, gender, profile_picture_url, bio
         } = req.body;
 
-        // Generate the user_id (e.g., using googleId from session or email+name)
-        const googleId = req.session.passport?.user; // Assuming googleId is stored in session
-        const user_id = googleId ? googleId : `${req.session.username}`;
+        // Debugging session data
+        console.log('Session Data:', req.user);
+
+        let user_id=await userServices.getUserId(req);
 
         // Create a userData object to pass to the model
         const userData = {
-            user_id,first_name,last_name, email, mobile, date_of_birth,
+            user_id, first_name, last_name, email, mobile, date_of_birth,
             address_line1, address_line2, city, state, postal_code,
             country, gender, profile_picture_url, bio
         };
@@ -110,14 +126,13 @@ const submitUserDetails = async (req, res) => {
 
         res.send('User details submitted successfully!');
     } catch (err) {
-        console.error('Error inserting user:', err);
+        console.error('Error inserting user:', err.message);
         res.status(500).send('Internal Server Error');
     }
 };
 
 
-
-const updateUserDetails = async (req, res) => {
+const updateUserDetails =  async (req, res) => {
     try {
         // Extract details from the form submission
         const {
@@ -126,10 +141,7 @@ const updateUserDetails = async (req, res) => {
             country, gender, profile_picture_url, bio
         } = req.body;
 
-        // Generate the user_id (e.g., using googleId from session or email+name)
-        const googleId = req.session.passport?.user; // Assuming googleId is stored in session
-        const user_id = googleId ? googleId : `${req.session.username}`;
-
+        let user_id=await userServices.getUserId(req);
         // Create a userData object to pass to the model
         const userData = {
             user_id, first_name,last_name, email, mobile, date_of_birth,

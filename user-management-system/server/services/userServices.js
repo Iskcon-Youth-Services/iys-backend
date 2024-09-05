@@ -51,9 +51,27 @@ const calculateSravanScore = (guruMinutes, spMinutes, otherMinutes) => {
 
     return score / 7;
 };
+const getUserId = (req) => {
+  // Check if session data exists
+  if (req.session && req.session.passport && req.session.passport.user) {
+    const googleId = req.session.passport.user;
+    user_id = googleId;
+} else if (req.session && req.session.username) {
+    user_id = req.session.username;
+}
+
+if (!user_id) {
+    throw new Error('User ID is undefined');
+}
+
+user_id = String(user_id);
+console.log('User ID:', user_id);
+return user_id;
+}
 
 // Export the functions
 module.exports = {
     calculatePathanScore,
-    calculateSravanScore
+    calculateSravanScore,
+    getUserId
 };

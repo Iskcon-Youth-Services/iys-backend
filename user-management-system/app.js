@@ -9,7 +9,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const { promisify } = require('util')
 const { application } = require('express')
-const {createTables} = require('./server/config/createTable');
 const pgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
 const passport1 = require('./server/config/passport');
@@ -21,11 +20,11 @@ const PORT = process.env.PORT || 5002
 
 // Use middleware to parse cookies and request bodies
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// Make sure body-parser is used before your routes
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// Call createTables to ensure tables are created
-createTables();
+
 
 
 // Set up session middleware
