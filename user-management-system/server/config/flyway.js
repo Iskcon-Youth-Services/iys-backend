@@ -1,11 +1,11 @@
-
+require('dotenv').config();
 
 module.exports = {
     flywayArgs: {
-    url: 'jdbc:postgresql://localhost:5432/IYS_Users',
-    user: 'postgres',
-    password: '123',
+    url:  process.env.DB_URL,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
     schemas: ['public'],
-    locations: ['filesystem:./server/migrations']
+    locations: ['filesystem:./migrations']
     }
 };
