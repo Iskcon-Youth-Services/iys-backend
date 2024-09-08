@@ -35,4 +35,6 @@ router.route('/submitUserDetails').post(userController.submitUserDetails);
 
 router.route('/updateUserDetails').post(userController.updateUserDetails);
 
+router.route('/getTopSadhanaScorer').post(userController.getTopSadhanaScorer);
+
 module.exports = router;

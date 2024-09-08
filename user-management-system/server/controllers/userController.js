@@ -159,6 +159,20 @@ const updateUserDetails =  async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+const getTopSadhanaScorer = async (req, res) => {
+    let data = [];
+    try {
+       
+        let user_id=userServices.getUserId(req);
+        
+        data =  await userModels.getTopSadhanaScorer([user_id,req.body.startDate,req.body.endDate,req.body.numberOfTopScorers]);
+        res.send({report:data});
+        console.log({report: data});
+    } catch (err) {
+        res.json({msg: err, data: []});
+    }
+};
 // Export the function
-module.exports = { welcome,users , signup,login,submitSadhanaForm,logout , getSadhanaReport, submitUserDetails, updateUserDetails };
+module.exports = { welcome,users , signup,login,submitSadhanaForm,logout , getSadhanaReport, submitUserDetails, updateUserDetails ,getTopSadhanaScorer};
 

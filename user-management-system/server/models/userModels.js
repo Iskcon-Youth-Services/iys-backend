@@ -144,4 +144,20 @@ const values = [
     }
 };
 
-module.exports = { getUsers, signupUsers, loginUser,submitSadhanaForm ,getSadhanaReport ,submitUserDetails,updateUserDetails};
+
+const getTopSadhanaScorer = async (input) => {
+    let query = `SELECT ud.name, ss.max_totalscore
+    FROM (
+    SELECT user_id, MAX(totalscore) AS max_totalscore
+    FROM SadhanaScore
+    WHERE date BETWEEN $1 AND $2
+    GROUP BY user_id
+    ORDER BY max_totalscore DESC
+    LIMIT $3;
+    ) ss
+    JOIN userDetails ud ON ss.user_id = ud.user_id;
+    `;
+    return await promise_connection(query,input);
+};
+
+module.exports = { getUsers, signupUsers, loginUser,submitSadhanaForm ,getSadhanaReport ,submitUserDetails,updateUserDetails,getTopSadhanaScorer};
