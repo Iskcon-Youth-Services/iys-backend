@@ -6,7 +6,9 @@
   "scripts": {
     "migrate": "flyway -c ./server/config/flyway.js migrate",
     "clean": "flyway -c ./server/config/flyway.js clean",
-    "info": "flyway -c ./server/config/flyway.js info"
+    "info": "flyway -c ./server/config/flyway.js info",
+    "start": "node app.js",
+    "test": "jest"
   },
   "author": "manish kumar",
   "license": "ISC",
@@ -28,6 +30,7 @@
   },
   "devDependencies": {
     "node-flywaydb": "^3.0.7",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "jest": "^26.6.0"
   }
 }
