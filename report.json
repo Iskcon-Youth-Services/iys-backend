@@ -1,0 +1,247 @@
+{
+  "individualResults": [
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": null,
+      "schemaName": "public_iys",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.22.3",
+      "database": "IYS_Users",
+      "warnings": [],
+      "timestamp": "2024-09-05T01:21:50.310650900",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": null,
+      "schemaName": "public_iys_dev",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.22.3",
+      "database": "IYS_Users",
+      "warnings": [],
+      "timestamp": "2024-09-05T16:17:50.075498600",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": null,
+      "schemaName": "public_iys_dev",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.22.3",
+      "database": "IYS_Users",
+      "warnings": [],
+      "timestamp": "2024-09-05T16:30:16.599700500",
+      "operation": "migrate",
+      "exception": "Migration V1__Initial_login_migration.sql failed\n------------------------------------------------\nSQL State  : 42P01\nError Code : 0\nMessage    : ERROR: relation \"userdetails\" does not exist\nLocation   : .\\server\\migrations\\V1__Initial_login_migration.sql (D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V1__Initial_login_migration.sql)\nLine       : 10\nStatement  : CREATE TABLE IF NOT EXISTS SadhanaScore (\r\n                id SERIAL PRIMARY KEY,\r\n                date DATE NOT NULL,\r\n                user_id VARCHAR(100) REFERENCES userDetails(user_id) ON DELETE CASCADE,\r\n                nidratobedscore INT,\r\n                nidrawakeupscore INT,\r\n                nidradaysleepscore INT,\r\n                japascore INT,\r\n                pathanscore FLOAT,\r\n                sravanscore FLOAT,\r\n                totalscore FLOAT,\r\n                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\r\n            )\n",
+      "licenseFailed": false
+    },
+    {
+      "schemaVersion": null,
+      "schemaName": "public_iys_dev",
+      "migrations": [
+        {
+          "category": "",
+          "version": "",
+          "rawVersion": "",
+          "description": "\u003c\u003c Flyway Schema Creation \u003e\u003e",
+          "type": "SCHEMA",
+          "installedOnUTC": "2024-09-05T10:47:51.682565Z",
+          "state": "Success",
+          "undoable": "",
+          "filepath": "",
+          "undoFilepath": "",
+          "installedBy": "postgres",
+          "executionTime": 0
+        },
+        {
+          "category": "Versioned",
+          "version": "1",
+          "rawVersion": "1",
+          "description": "Initial login migration",
+          "type": "SQL",
+          "installedOnUTC": "",
+          "state": "Pending",
+          "undoable": "No",
+          "filepath": "D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V1__Initial_login_migration.sql",
+          "undoFilepath": "",
+          "installedBy": "",
+          "executionTime": 0
+        }
+      ],
+      "flywayVersion": "9.22.3",
+      "database": "IYS_Users",
+      "allSchemasEmpty": false,
+      "timestamp": "2024-09-05T16:32:46.806799",
+      "operation": "info",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "1",
+      "schemaName": "public_iys_dev",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1",
+          "description": "Initial login migration",
+          "type": "SQL",
+          "filepath": "D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V1__Initial_login_migration.sql",
+          "executionTime": 573
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": true,
+      "flywayVersion": "9.22.3",
+      "database": "IYS_Users",
+      "warnings": [],
+      "timestamp": "2024-09-05T16:37:11.078262900",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1",
+      "targetSchemaVersion": null,
+      "schemaName": "public_iys_dev",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.22.3",
+      "database": "IYS_Users",
+      "warnings": [],
+      "timestamp": "2024-09-05T16:38:56.751266700",
+      "operation": "migrate",
+      "exception": "Migration V2__Add_sadhanaform_table.sql failed\n----------------------------------------------\nSQL State  : 42P01\nError Code : 0\nMessage    : ERROR: relation \"userdetails\" does not exist\nLocation   : .\\server\\migrations\\V2__Add_sadhanaform_table.sql (D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V2__Add_sadhanaform_table.sql)\nLine       : 1\nStatement  : CREATE TABLE IF NOT EXISTS SadhanaScore (\r\n                id SERIAL PRIMARY KEY,\r\n                date DATE NOT NULL,\r\n                user_id VARCHAR(100) REFERENCES userDetails(user_id) ON DELETE CASCADE,\r\n                nidratobedscore INT,\r\n                nidrawakeupscore INT,\r\n                nidradaysleepscore INT,\r\n                japascore INT,\r\n                pathanscore FLOAT,\r\n                sravanscore FLOAT,\r\n                totalscore FLOAT,\r\n                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\r\n            )\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1",
+      "targetSchemaVersion": null,
+      "schemaName": "public_iys_dev",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.22.3",
+      "database": "IYS_Users",
+      "warnings": [],
+      "timestamp": "2024-09-05T16:41:09.278501300",
+      "operation": "migrate",
+      "exception": "Migration V2__Add_sadhanaform_table.sql failed\n----------------------------------------------\nSQL State  : 42P01\nError Code : 0\nMessage    : ERROR: relation \"userdetails\" does not exist\nLocation   : .\\server\\migrations\\V2__Add_sadhanaform_table.sql (D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V2__Add_sadhanaform_table.sql)\nLine       : 1\nStatement  : CREATE TABLE IF NOT EXISTS SadhanaScore (\r\n                id SERIAL PRIMARY KEY,\r\n                date DATE NOT NULL,\r\n                user_id VARCHAR(100) REFERENCES userDetails(user_id) ON DELETE CASCADE,\r\n                nidratobedscore INT,\r\n                nidrawakeupscore INT,\r\n                nidradaysleepscore INT,\r\n                japascore INT,\r\n                pathanscore FLOAT,\r\n                sravanscore FLOAT,\r\n                totalscore FLOAT,\r\n                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\r\n            )\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1",
+      "targetSchemaVersion": "4",
+      "schemaName": "public_iys_dev",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "2",
+          "description": "Add userDetails table",
+          "type": "SQL",
+          "filepath": "D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V2__Add_userDetails_table.sql",
+          "executionTime": 431
+        },
+        {
+          "category": "Versioned",
+          "version": "3",
+          "description": "Add sadhanaform table",
+          "type": "SQL",
+          "filepath": "D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V3__Add_sadhanaform_table.sql",
+          "executionTime": 227
+        },
+        {
+          "category": "Versioned",
+          "version": "4",
+          "description": "Add session table",
+          "type": "SQL",
+          "filepath": "D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V4__Add_session_table.sql",
+          "executionTime": 218
+        }
+      ],
+      "migrationsExecuted": 3,
+      "success": true,
+      "flywayVersion": "9.22.3",
+      "database": "IYS_Users",
+      "warnings": [],
+      "timestamp": "2024-09-05T16:42:42.952883300",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "4",
+      "targetSchemaVersion": null,
+      "schemaName": "public_iys_dev",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.22.3",
+      "database": "IYS_Users",
+      "warnings": [],
+      "timestamp": "2024-09-05T16:43:36.648233100",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "4",
+      "schemaName": "public",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1",
+          "description": "Initial login migration",
+          "type": "SQL",
+          "filepath": "D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V1__Initial_login_migration.sql",
+          "executionTime": 353
+        },
+        {
+          "category": "Versioned",
+          "version": "2",
+          "description": "Add userDetails table",
+          "type": "SQL",
+          "filepath": "D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V2__Add_userDetails_table.sql",
+          "executionTime": 604
+        },
+        {
+          "category": "Versioned",
+          "version": "3",
+          "description": "Add sadhanaform table",
+          "type": "SQL",
+          "filepath": "D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V3__Add_sadhanaform_table.sql",
+          "executionTime": 124
+        },
+        {
+          "category": "Versioned",
+          "version": "4",
+          "description": "Add session table",
+          "type": "SQL",
+          "filepath": "D:\\IYS\\IYS\\Prep projects\\iys-backend\\user-management-system\\.\\server\\migrations\\V4__Add_session_table.sql",
+          "executionTime": 117
+        }
+      ],
+      "migrationsExecuted": 4,
+      "success": true,
+      "flywayVersion": "9.22.3",
+      "database": "IYS_Users",
+      "warnings": [],
+      "timestamp": "2024-09-05T16:57:02.982490300",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    }
+  ]
+}

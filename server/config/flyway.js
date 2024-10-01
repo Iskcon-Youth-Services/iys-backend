@@ -1,0 +1,11 @@
+require('dotenv').config();
+
+module.exports = {
+    flywayArgs: {
+    url:  process.env.DB_URL,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    schemas: ['public'],
+    locations: ['filesystem:./migrations']
+    }
+};
