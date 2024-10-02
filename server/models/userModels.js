@@ -7,12 +7,12 @@ client.connect();
 const promise_connection = promisify(client.query).bind(client);
 
 const getUsers = async () => {
-    let query = "SELECT * FROM userDetails";
+    let query = "SELECT * FROM userdetails";
     return await promise_connection(query);
 };
 
 const signupUsers = async (req) => {
-    const query = "INSERT INTO userLogin (username, password, email) VALUES ($1, $2, $3) RETURNING *;";
+    const query = "INSERT INTO userlogin (username, password, email) VALUES ($1, $2, $3) RETURNING *;";
     const hashedPassword = await bcrypt.hash(req.password, 10);  // Hashing the password
     const values = [req.username, hashedPassword, req.email];
     console.log(values);
@@ -27,7 +27,7 @@ const signupUsers = async (req) => {
 };
 
 const loginUser = async (username, password) => {
-    const query = 'SELECT * FROM userLogin WHERE username = $1;';
+    const query = 'SELECT * FROM userlogin WHERE username = $1;';
     const values = [username];
 
     try {
@@ -50,7 +50,7 @@ const loginUser = async (username, password) => {
     }
 };
 const submitSadhanaForm = async (req) => {
-    const query = "INSERT INTO SadhanaScore (date,user_id,nidratobedscore,nidrawakeupscore,nidradaysleepscore,japascore,pathanscore,sravanscore,totalscore) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9) RETURNING *;";
+    const query = "INSERT INTO sadhanascore (date,user_id,nidratobedscore,nidrawakeupscore,nidradaysleepscore,japascore,pathanscore,sravanscore,totalscore) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9) RETURNING *;";
    
     const values = [new Date(), req.user_id,req.nidraToBedScore, req.nidraWakeUpScore,req.nidraDaySleepScore,req.japaScore,req.pathanScore,req.sravanScore,req.total];
     console.log(values);
@@ -77,7 +77,7 @@ const submitUserDetails = async (userData) => {
     } = userData;
 
     const query = `
-        INSERT INTO userDetails (
+        INSERT INTO userdetails (
             user_id, first_name, last_name, email, mobile, date_of_birth,
             address_line1, address_line2, city, state, postal_code,
             country, gender, profile_picture_url, bio
@@ -108,7 +108,7 @@ const updateUserDetails = async (userData) => {
     } = userData;
 
     const query = `
-    UPDATE userDetails
+    UPDATE userdetails
     SET 
         first_name = $2,
         last_name = $3,
@@ -149,13 +149,13 @@ const getTopSadhanaScorer = async (input) => {
     let query = `SELECT ud.name, ss.max_totalscore
     FROM (
     SELECT user_id, MAX(totalscore) AS max_totalscore
-    FROM SadhanaScore
+    FROM sadhanascore
     WHERE date BETWEEN $1 AND $2
     GROUP BY user_id
     ORDER BY max_totalscore DESC
     LIMIT $3;
     ) ss
-    JOIN userDetails ud ON ss.user_id = ud.user_id;
+    JOIN userdetails ud ON ss.user_id = ud.user_id;
     `;
     return await promise_connection(query,input);
 };
