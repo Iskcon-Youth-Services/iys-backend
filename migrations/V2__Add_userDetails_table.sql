@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS userDetails (
+CREATE TABLE IF NOT EXISTS userdetails (
         user_id VARCHAR(100) PRIMARY KEY,
         first_name VARCHAR(50) NOT NULL,
         last_name VARCHAR(50) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS userDetails (
     );
     
     
-    CREATE  INDEX IF NOT EXISTS idx_users_email ON userDetails(email);
-    CREATE INDEX IF NOT EXISTS idx_users_mobile ON userDetails(mobile);
-    CREATE INDEX IF NOT EXISTS idx_users_city ON userDetails(city);
+    CREATE  INDEX IF NOT EXISTS idx_users_email ON userdetails(email);
+    CREATE INDEX IF NOT EXISTS idx_users_mobile ON userdetails(mobile);
+    CREATE INDEX IF NOT EXISTS idx_users_city ON userdetails(city);
     

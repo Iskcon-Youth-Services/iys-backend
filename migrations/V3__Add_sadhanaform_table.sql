@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS SadhanaScore (
+CREATE TABLE IF NOT EXISTS sadhanascore (
                 id SERIAL PRIMARY KEY,
                 date DATE NOT NULL,
                 user_id VARCHAR(100) REFERENCES userDetails(user_id) ON DELETE CASCADE,
