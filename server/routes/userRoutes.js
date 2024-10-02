@@ -20,7 +20,7 @@ const { hasRole } = require('../middlewares/roleMiddleware');
 
 router.route('/getUsers').get( isAuthenticated,userController.users);
 
-router.route('/signup').post( isAuthenticated,userController.signup);
+router.route('/signup').post( userController.signup);
 
 router.route('/login').post( isAuthenticated,userController.login);
 
