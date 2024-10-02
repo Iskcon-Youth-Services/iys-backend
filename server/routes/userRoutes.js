@@ -22,7 +22,7 @@ router.route('/getUsers').get( isAuthenticated,userController.users);
 
 router.route('/signup').post( userController.signup);
 
-router.route('/login').post( isAuthenticated,userController.login);
+router.route('/login').post( userController.login);
 
 router.route('/logout').get( isAuthenticated,userController.logout);
 
