@@ -1,5 +1,5 @@
 const isAuthenticated = (req, res, next) => {
-    if (req.session && req.session.username) {
+    if (req.session &&( req.session.username || req.session.passport)) {
         // User is authenticated
         next();
     } else {
