@@ -8,7 +8,7 @@
     "clean": "flyway -c ./server/config/flyway.js clean",
     "info": "flyway -c ./server/config/flyway.js info",
     "start_server": "node app.js",
-    "start": "npm run clean && npm run migrate && npm run start_server",
+    "start": "npm run migrate && npm run start_server",
     "test": "jest"
   },
   "author": "manish kumar",

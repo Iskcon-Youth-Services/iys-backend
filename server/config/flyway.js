@@ -20,6 +20,6 @@ module.exports = {
         password: process.env.DB_PASS,
         schemas: ['public'],
         locations: ['filesystem:./migrations'],
-        baselineOnMigrate: true // Initialize the schema history table
+        // baselineOnMigrate: true // Initialize the schema history table
     }
 };
