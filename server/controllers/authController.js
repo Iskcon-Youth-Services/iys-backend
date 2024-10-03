@@ -2,7 +2,7 @@ const passport = require('passport');
 
 const googleCallback = passport.authenticate('google', {
     failureRedirect: '/auth/google',
-    successRedirect: '/auth/google/callback',
+    successRedirect: '/api/dashboard',
     session: true
 });
 
