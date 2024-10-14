@@ -160,4 +160,30 @@ const getTopSadhanaScorer = async (input) => {
     return await promise_connection(query,input);
 };
 
-module.exports = { getUsers, signupUsers, loginUser,submitSadhanaForm ,getSadhanaReport ,submitUserDetails,updateUserDetails,getTopSadhanaScorer};
+
+const contactUs = async (contactUsData) => {
+    const {
+        name,email,msg
+    } = contactUsData;
+
+    const query = `
+        INSERT INTO userdetails (
+          name,email,msg
+        ) VALUES ($1, $2, $3)
+        RETURNING *;
+    `;
+    const values = [
+        name,email,msg
+    ];
+
+    try {
+        const result = await promise_connection(query, values);
+        // return result.rows[0];  // Return the inserted user object
+    } catch (err) {
+        console.error('Error inserting user:', err);
+        throw err;
+    }
+};
+
+
+module.exports = { getUsers, signupUsers, loginUser,submitSadhanaForm ,getSadhanaReport ,submitUserDetails,updateUserDetails,getTopSadhanaScorer,contactUs};

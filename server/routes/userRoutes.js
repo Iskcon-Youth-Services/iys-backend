@@ -38,6 +38,9 @@ router.route('/updateUserDetails').post( isAuthenticated,userController.updateUs
 
 router.route('/getTopSadhanaScorer').post( isAuthenticated,userController.getTopSadhanaScorer);
 
+router.route('/contactUs').post( isAuthenticated,userController.contactUs);
+
+
 // if required-------------------------------------------------------------------------------------------
 
 // router.route('/getAnnouncements').get( isAuthenticated,userController.getAnnouncements);

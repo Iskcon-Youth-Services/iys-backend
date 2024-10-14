@@ -62,11 +62,11 @@ const logout = async (req,res)=> {
 const submitSadhanaForm = async (req,res) => {
     const {nidraToBed, nidraWakeUp, nidraDaySleep, japa, pathanMin,sravanMin} = req.body;
   
-    var scoreMap=[25,20,15,10,5,0,-5];
-    let nidraToBedScore=scoreMap[nidraToBed];
-    let nidraWakeUpScore=scoreMap[nidraWakeUp];
-    let nidraDaySleepScore=scoreMap[nidraDaySleep];
-    let japaScore=scoreMap[japa];
+    // var scoreMap=[25,20,15,10,5,0,-5];
+    let nidraToBedScore=parseInt(nidraToBed);
+    let nidraWakeUpScore=parseInt(nidraWakeUp);
+    let nidraDaySleepScore=parseInt(nidraDaySleep);
+    let japaScore=parseInt(japa);
     
     let pathanScore=userServices.calculatePathanScore(parseInt(pathanMin[0]),parseInt(pathanMin[1]),parseInt(pathanMin[2]));
     let sravanScore=userServices.calculateSravanScore(parseInt(sravanMin[0]),parseInt(sravanMin[1]),parseInt(sravanMin[2]));
@@ -173,6 +173,33 @@ const getTopSadhanaScorer = async (req, res) => {
         res.json({msg: err, data: []});
     }
 };
+
+const contactUs = async (req, res) => {
+    try {
+        // console.log('Session Data:', req.session);
+        // Extract details from the form submission
+        const {
+            name,email,msg
+        } = req.body;
+
+      
+        // let user_id=await userServices.getUserId(req);
+
+        // Create a userData object to pass to the model
+        const contactUsData = {
+            name,email,msg
+        };
+
+        // Insert the user into the database
+        const newUser = await userModels.contactUs(contactUsData);
+        console.log('User inserted:', newUser);
+
+        res.send('User details submitted successfully!');
+    } catch (err) {
+        console.error('Error inserting user:', err.message);
+        res.status(500).send('Internal Server Error');
+    }
+};
 // Export the function
-module.exports = { welcome,users , signup,login,submitSadhanaForm,logout , getSadhanaReport, submitUserDetails, updateUserDetails ,getTopSadhanaScorer};
+module.exports = { welcome,users , signup,login,submitSadhanaForm,logout , getSadhanaReport, submitUserDetails, updateUserDetails ,getTopSadhanaScorer , contactUs};
 

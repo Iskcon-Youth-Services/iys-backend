@@ -1,0 +1,7 @@
+CREATE TABLE userdetails (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    msg TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
