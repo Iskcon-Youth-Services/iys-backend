@@ -60,7 +60,7 @@ const logout = async (req,res)=> {
 
 
 const submitSadhanaForm = async (req,res) => {
-    const {nidraToBed, nidraWakeUp, nidraDaySleep, japa, pathanMin,sravanMin} = req.body;
+    const {nidraToBed, nidraWakeUp, nidraDaySleep, japa, pathanMinSp,pathanMinOther,pathanMinSloka,sravanMinGuru,sravanMinSp,sravanMinOther} = req.body;
   
     // var scoreMap=[25,20,15,10,5,0,-5];
     let nidraToBedScore=parseInt(nidraToBed);
@@ -68,8 +68,8 @@ const submitSadhanaForm = async (req,res) => {
     let nidraDaySleepScore=parseInt(nidraDaySleep);
     let japaScore=parseInt(japa);
     
-    let pathanScore=userServices.calculatePathanScore(parseInt(pathanMin[0]),parseInt(pathanMin[1]),parseInt(pathanMin[2]));
-    let sravanScore=userServices.calculateSravanScore(parseInt(sravanMin[0]),parseInt(sravanMin[1]),parseInt(sravanMin[2]));
+    let pathanScore=userServices.calculatePathanScore(parseInt(pathanMinSp),parseInt(pathanMinOther),parseInt(pathanMinSloka));
+    let sravanScore=userServices.calculateSravanScore(parseInt(sravanMinGuru),parseInt(sravanMinSp),parseInt(sravanMinOther));
     let total=nidraToBedScore+nidraWakeUpScore+nidraDaySleepScore+japaScore+pathanScore+sravanScore;
     let user_id=await userServices.getUserId(req);
     let score={user_id,nidraToBedScore,nidraWakeUpScore,nidraDaySleepScore,japaScore,pathanScore,sravanScore,total};
